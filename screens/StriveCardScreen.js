@@ -1,13 +1,19 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 
-export default class LinksScreen extends React.Component {
+export default class StriveCardScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   static navigationOptions = {
   };
 
   render() {
+    const { params } = this.props.navigation.state;
     return (
       <ScrollView style={styles.container}>
+        <Text>this is strive card </Text>
       </ScrollView>
     );
   }

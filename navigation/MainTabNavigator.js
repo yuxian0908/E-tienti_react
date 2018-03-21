@@ -2,35 +2,43 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
+import I18n from 'ex-react-native-i18n';
 
 import Colors from '../constants/Colors';
 
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import StriveRecordScreen from '../screens/StriveRecordScreen';
+
+// i18n config
+import { CHENESE } from '../constants/i18n';
+I18n.locale = "ch";
+const { ch } = CHENESE;
+I18n.translations = {
+  'ch': ch
+}
 
 export default TabNavigator(
   {
-    '首頁': {
+    [I18n.t('nav.index')]: {
       screen: HomeScreen,
     },
-    '奮鬥紀錄': {
-      screen: LinksScreen,
+    [I18n.t('nav.striveRecord')]: {
+      screen: StriveRecordScreen,
     }
   },
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
-        console.log(navigation.state)
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case '首頁':
+          case I18n.t('nav.index'):
             iconName =
               Platform.OS === 'ios'
                 ? `ios-information-circle${focused ? '' : '-outline'}`
                 : 'md-information-circle';
             break;
-          case '奮鬥紀錄':
+          case I18n.t('nav.striveRecord'):
             iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
         }
         return (

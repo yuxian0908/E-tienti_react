@@ -7,7 +7,6 @@ import { BUTTON_GROUP_STYLES } from '../constants/Layout';
 
 class KeysButtons extends React.Component {
   render() {
-      console.log(this.props)
     const { selectedValues: { selectedKeyIndex }, keys } = this.props;
     const keyButtons = keys.map(key => ([key.key]));
     const {

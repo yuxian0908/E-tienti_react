@@ -1,16 +1,53 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
+import Expo, { SQLite } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import RootNavigation from './navigation/RootNavigation';
+import { TouchableOpacity } from 'react-native';
+import I18n from 'ex-react-native-i18n';
 
+import RootNavigation from './navigation/RootNavigation';
 import store from './redux/store';
+import { MODELS } from './constants/models';
+import { CHENESE } from './constants/i18n';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+
+  componentDidMount() {
+
+    //init i18n
+    I18n.locale = "ch";
+    const { ch } = CHENESE;
+    I18n.translations = {
+      'ch': ch
+    }
+
+    //init database
+    const db = SQLite.openDatabase('db.db');
+    const models = MODELS;
+    for(let i=0;i<models.tables.length;i++){
+      let table = models.tables[i];
+      let columns = '';
+      for(let j=0;j<table.columns.length;j++){
+        if(j===table.columns.length-1){
+          columns = columns + table.columns[j].name+ ' ' +table.columns[j].type.toUpperCase();
+        }else{
+          columns = columns + table.columns[j].name+ ' ' +table.columns[j].type.toUpperCase() + ',';
+        }
+      }
+      db.transaction(sql => {
+        sql.executeSql(
+          "CREATE TABLE IF NOT EXISTS " + table.name +'('+ columns +')'
+        );
+      });
+    }
+  }
+
+
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {

@@ -9,18 +9,38 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import Expo, { SQLite } from 'expo';
+import { Button } from 'react-native-elements';
 
-import { MonoText } from '../components/StyledText';
 import KeysButtons from '../components/keysbuttons';
+import { TestButtons } from '../components/TestButtons';
+import { CalendarCpn } from '../components/Calendar';
 import { HOME_SCREEN_STYLE } from '../constants/styles';
+import I18n from 'ex-react-native-i18n';
+
+// i18n config
+import { CHENESE } from '../constants/i18n';
+I18n.locale = "ch";
+const { ch } = CHENESE;
+I18n.translations = {
+  'ch': ch
+}
 
 export default class HomeScreen extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   static navigationOptions = {
 
   };
 
+  componentDidMount() {
+    console.log(this.props)
+  }
+
   render() {
+    const { params } = this.props.navigation.state;
     const {
       container,
       developmentModeText,
@@ -32,7 +52,13 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={container}>
         <ScrollView style={container} contentContainerStyle={contentContainer}>
-          <KeysButtons />
+          
+          {/* <KeysButtons /> */}
+          {/* <TestButtons /> */}
+          <CalendarCpn />
+          <View>
+              <Button title={I18n.t('tostrive')} onPress={() => this.props.navigation.navigate('StriveCard')}/>
+          </View>
         </ScrollView>
       </View>
     );

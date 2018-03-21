@@ -1,22 +1,40 @@
 import { Notifications } from 'expo';
 import React from 'react';
-import { Platform,Image } from 'react-native';
+import { Platform,Image,Text,TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
+import StriveCardScreen from '../screens/StriveCardScreen';
 
 import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import { STATUS_BAR_HEIGHT, SCREEN_WIDTH, BUTTON_GROUP_STYLES } from '../constants/Layout';
-import icon from '../assets/images/logo.png';
+import logo from '../assets/images/logo.png';
 
+const backButton = ({navigation}) => ({ 
+    headerRight:(
+      <TouchableOpacity onPress={() =>{
+        console.log('aaa');
+        navigation.goBack(null)
+      }}>
+        <Icon 
+        name = 'back' type = 'entypo' color = 'red' 
+        style = {BUTTON_GROUP_STYLES.backIconStyle}/>
+      </TouchableOpacity>
+    )
+})
 
 const RootStackNavigator = StackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
     },
+    StriveCard: { 
+      screen: StriveCardScreen,
+      navigationOptions: backButton
+    },
   },
   {
-    navigationOptions: () => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'E-tienti',
       headerTitleStyle: {
         fontWeight: 'normal',
@@ -29,7 +47,7 @@ const RootStackNavigator = StackNavigator(
       },
       headerLeft:(
         <Image
-          source={icon}
+          source={logo}
           style={BUTTON_GROUP_STYLES.logoStyle}
         />
       )

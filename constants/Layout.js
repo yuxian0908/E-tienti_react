@@ -22,5 +22,12 @@ export const BUTTON_GROUP_STYLES = {
     marginLeft: 10,
     width: 40,
     height: 40
+  },
+  backIconStyle : {
+    marginRight: 10,
+    marginTop: 0,
+    marginLeft: 10,
+    width: 40,
+    height: 40
   }
 };
