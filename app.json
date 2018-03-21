@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "etienti-react",
+    "description": "A very interesting project.",
+    "slug": "etienti-react",
+    "privacy": "public",
+    "sdkVersion": "25.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "loading": {
+      "icon": "./assets/images/logo.png",
+      "hideExponentText": true
+    },
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
