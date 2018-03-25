@@ -18,6 +18,7 @@ class CalendarView extends React.Component {
         buttonStyle,
         selectedTextStyle
     } = BUTTON_GROUP_STYLES;
+    
     return (
         <View>
             <Calendar

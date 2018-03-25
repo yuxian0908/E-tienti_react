@@ -13,7 +13,6 @@ import logo from '../assets/images/logo.png';
 const backButton = ({navigation}) => ({ 
     headerRight:(
       <TouchableOpacity onPress={() =>{
-        console.log('aaa');
         navigation.goBack(null)
       }}>
         <Icon 

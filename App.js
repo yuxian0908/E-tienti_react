@@ -10,7 +10,9 @@ import I18n from 'ex-react-native-i18n';
 import RootNavigation from './navigation/RootNavigation';
 import store from './redux/store';
 import { MODELS } from './constants/models';
-import { CHENESE } from './constants/i18n';
+import { i18nCONFIG } from './constants/i18n';
+
+i18nCONFIG();
 
 export default class App extends React.Component {
   state = {
@@ -18,13 +20,6 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-
-    //init i18n
-    I18n.locale = "ch";
-    const { ch } = CHENESE;
-    I18n.translations = {
-      'ch': ch
-    }
 
     //init database
     const db = SQLite.openDatabase('db.db');

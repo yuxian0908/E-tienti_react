@@ -26,7 +26,7 @@ export class TestButtons extends React.Component {
             <TouchableOpacity onPress={testTable.testDropTable} 
             style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Text>
-                testDropTable  
+                testDropTables  
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={testTable.testInsert} 

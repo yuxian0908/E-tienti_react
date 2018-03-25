@@ -5,17 +5,12 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import I18n from 'ex-react-native-i18n';
 
 import Colors from '../constants/Colors';
+import { i18nCONFIG } from '../constants/i18n';
 
 import HomeScreen from '../screens/HomeScreen';
-import StriveRecordScreen from '../screens/StriveRecordScreen';
+import { StriveRecordScreen } from '../screens/StriveRecordScreen';
 
-// i18n config
-import { CHENESE } from '../constants/i18n';
-I18n.locale = "ch";
-const { ch } = CHENESE;
-I18n.translations = {
-  'ch': ch
-}
+i18nCONFIG();
 
 export default TabNavigator(
   {

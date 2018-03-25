@@ -12,19 +12,13 @@ import { WebBrowser } from 'expo';
 import Expo, { SQLite } from 'expo';
 import { Button } from 'react-native-elements';
 
-import KeysButtons from '../components/keysbuttons';
 import { TestButtons } from '../components/TestButtons';
 import { CalendarCpn } from '../components/Calendar';
 import { HOME_SCREEN_STYLE } from '../constants/styles';
 import I18n from 'ex-react-native-i18n';
+import { i18nCONFIG } from '../constants/i18n';
 
-// i18n config
-import { CHENESE } from '../constants/i18n';
-I18n.locale = "ch";
-const { ch } = CHENESE;
-I18n.translations = {
-  'ch': ch
-}
+i18nCONFIG();
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -36,7 +30,6 @@ export default class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props)
   }
 
   render() {
@@ -53,8 +46,7 @@ export default class HomeScreen extends React.Component {
       <View style={container}>
         <ScrollView style={container} contentContainerStyle={contentContainer}>
           
-          {/* <KeysButtons /> */}
-          {/* <TestButtons /> */}
+          <TestButtons />
           <CalendarCpn />
           <View>
               <Button title={I18n.t('tostrive')} onPress={() => this.props.navigation.navigate('StriveCard')}/>
