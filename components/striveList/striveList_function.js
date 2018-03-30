@@ -21,11 +21,9 @@ export const StriveList_Fn = {
             db.transaction(sql => {
                 //find data from db
                 let seletedDateStr = selectedDay.dateString;
-                console.log(seletedDateStr);
                 sql.executeSql('SELECT * FROM striveCard WHERE date ="'+seletedDateStr+'" ;', [], (_, { rows }) =>{
                     if(rows.item(0)){
                         selectedSenAry = rows.item(0).content.split(',');
-                        console.log(selectedSenAry);
                         for(let i=0;i<DbAry.length;i++){
                             if(selectedSenAry.indexOf(DbAry[i].title)!==-1){
                                 DbAry[i].isChecked = true;

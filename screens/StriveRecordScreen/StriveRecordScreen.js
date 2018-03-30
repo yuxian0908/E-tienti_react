@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import { StriveRecord_Fn } from './StriveRecordFn';
 import { StriveRecordTableCpn } from '../../components/striveRecordTable';
+import { MonthSelectionCpn } from '../../components/modals/monthSelection/monthSelection_view'
 
 export class StriveRecordScreen extends React.Component {
   constructor(props) {
@@ -16,9 +17,9 @@ export class StriveRecordScreen extends React.Component {
 
     return (
       <ScrollView style={styles.container}>
-          
-        <Text>this is strive record</Text>
+        <MonthSelectionCpn />
         <StriveRecordTableCpn />
+        
       </ScrollView>
     );
   }

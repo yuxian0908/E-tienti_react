@@ -1,16 +1,14 @@
-import React from 'react';
-import Expo, { SQLite } from 'expo';
-import Picker from 'react-native-picker';
+import { SQLite, MailComposer } from 'expo';
 
 const db = SQLite.openDatabase('db.db');
 
 export const StriveRecordTable_Fn = {
-    monthRecordView : {
-        setDate:function(props){//direct the month table to selected month and get its data from db 
-          
+    monthRecordView: {
+        setDate:function(props, selected=null){//direct the month table to selected month and get its data from db 
           const { striveCard: { List, selectedList }, selectedDate: { selectedDay }, getStriveRecord} = props;
-          let day = new Date(selectedDay.dateString);
-          let test = this.dateEvent
+
+          let day = selected?new Date(selected.year,selected.month,0):new Date(selectedDay.dateString);
+
           
           setConfig = ()=>{
             this.selectedMonth = (day.getFullYear()+'-'+("0" + (day.getMonth() + 1)).slice(-2)+
@@ -35,13 +33,12 @@ export const StriveRecordTable_Fn = {
                   let date = Number(data.item(i).date.substring(8, 10));
                   let contentArray = data.item(i).content.split(',');
                   let contentCodeArray = new Array;
-                  console.log(contentArray);
                   for(let j=0;j<striveSentences.length;j++){
                     if(contentArray.indexOf(striveSentences[j].title)!==-1){
                       contentCodeArray.push(j+1);
                     }
                   }
-                  event[date] = contentCodeArray.join(',');
+                  event[date] = contentCodeArray.join(' ');
                 }
                 this.dateEvent = event;
                 props.getStriveRecord(this.dateEvent);
@@ -71,25 +68,11 @@ export const StriveRecordTable_Fn = {
         remaindDaysnum : 0,
         dateEvent:Array(28)
     },
-    test:()=>{
-      console.log(Picker)
-      let data = [];
-      for(var i=0;i<100;i++){
-          data.push(i);
-      }
-      Picker.init({
-          pickerData: data,
-          selectedValue: [59],
-          onPickerConfirm: data => {
-              console.log(data);
-          },
-          onPickerCancel: data => {
-              console.log(data);
-          },
-          onPickerSelect: data => {
-              console.log(data);
-          }
-      });
-      Picker.show();
+    sendEmail:(state)=>{
+      let sent = MailComposer.composeAsync({
+        subject:'奮鬥卡',
+        attachments:[state.exportImg],
+        recipients:[state.email]
+      })
     }
 };

@@ -15,7 +15,7 @@ export const TEST_DB = {
     },  
     testFindall : ()=>{
         db.transaction(sql => {
-            sql.executeSql('SELECT * FROM striveCard', [], (_, { rows }) =>{
+            sql.executeSql('SELECT * FROM setting', [], (_, { rows }) =>{
                 let data = JSON.stringify(rows);
                 console.log(data)
                 console.log(data.array)
@@ -29,7 +29,7 @@ export const TEST_DB = {
     },  
     testDropTable : ()=>{
         db.transaction(sql => {
-            sql.executeSql('DROP TABLE praiseCard;', [], (_, { rows }) =>
+            sql.executeSql('DROP TABLE setting;', [], (_, { rows }) =>
                 console.log(JSON.stringify(rows))
             );
         })

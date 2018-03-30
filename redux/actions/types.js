@@ -9,3 +9,4 @@ export const ENTER_STRIVE_CARD = 'enter_strive_card';
 export const GET_STRIVE_CARD_FR_DB = 'get_strive_card_fr_db';
 
 export const GET_STRIVE_RECORD = 'get_strive_record';
+export const SELECT_MONTH = 'select_month';

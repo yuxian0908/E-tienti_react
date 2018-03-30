@@ -9,6 +9,7 @@ import { i18nCONFIG } from '../constants/i18n';
 
 import HomeScreen from '../screens/HomeScreen';
 import { StriveRecordScreen } from '../screens/StriveRecordScreen';
+import { settingScreen } from '../screens/settingScreen';
 
 i18nCONFIG();
 
@@ -19,6 +20,9 @@ export default TabNavigator(
     },
     [I18n.t('nav.striveRecord')]: {
       screen: StriveRecordScreen,
+    },
+    [I18n.t('nav.setting')]: {
+      screen: settingScreen,
     }
   },
   {
@@ -34,6 +38,8 @@ export default TabNavigator(
                 : 'md-information-circle';
             break;
           case I18n.t('nav.striveRecord'):
+            iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
+          case I18n.t('nav.setting'):
             iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
         }
         return (

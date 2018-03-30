@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "etienti-react",
+    "name": "etienti",
     "description": "A very interesting project.",
-    "slug": "etienti-react",
+    "slug": "etienti",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "platforms": ["ios", "android"],
@@ -20,6 +20,9 @@
     },
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.etienti"
     }
   }
 }

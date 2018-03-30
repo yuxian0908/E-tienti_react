@@ -12,7 +12,7 @@ import { WebBrowser } from 'expo';
 import Expo, { SQLite } from 'expo';
 import { Button } from 'react-native-elements';
 
-import { TestButtons } from '../components/TestButtons';
+// import { TestButtons } from '../components/TestButtons';
 import { CalendarCpn } from '../components/Calendar';
 import { HOME_SCREEN_STYLE } from '../constants/styles';
 import I18n from 'ex-react-native-i18n';
@@ -45,8 +45,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={container}>
         <ScrollView style={container} contentContainerStyle={contentContainer}>
-          
-          <TestButtons />
+          {/* <TestButtons /> */}
           <CalendarCpn />
           <View>
               <Button title={I18n.t('tostrive')} onPress={() => this.props.navigation.navigate('StriveCard')}/>

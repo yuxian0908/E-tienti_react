@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ToastAndroid } from 'react-native';
 import { Text,  Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -35,7 +35,10 @@ class Btns extends React.Component {
 
             <Button title={I18n.t('striveCard.button.save')}
              buttonStyle={{width:SCREEN_WIDTH*0.25}}
-             onPress={()=>{striveCardBtns_Fn.saveStriveCard(this.props,saveContent)}}/>
+             onPress={()=>{
+                striveCardBtns_Fn.saveStriveCard(this.props,saveContent);
+                ToastAndroid.show(I18n.t('saved'),ToastAndroid.SHORT)
+            }}/>
 
         </View>
     );

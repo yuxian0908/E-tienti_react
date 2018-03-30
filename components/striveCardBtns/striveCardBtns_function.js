@@ -28,7 +28,6 @@ export const striveCardBtns_Fn = {
                     savedAry.push(savingContent[i].title)
                 }
             }
-            console.log(savedAry.join());
             db.transaction(sql => {
                 sql.executeSql('INSERT OR REPLACE INTO striveCard (content,date) values ("'+
                                 savedAry.join()+'","'+savingDate.dateString+'");', [], (_, { rows }) =>
