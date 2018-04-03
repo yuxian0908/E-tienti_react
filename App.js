@@ -20,26 +20,46 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-
-    //init database
-    const db = SQLite.openDatabase('db.db');
     const models = MODELS;
-    for(let i=0;i<models.tables.length;i++){
-      let table = models.tables[i];
-      let columns = '';
-      for(let j=0;j<table.columns.length;j++){
-        if(j===table.columns.length-1){
-          columns = columns + table.columns[j].name+ ' ' +table.columns[j].type.toUpperCase();
-        }else{
-          columns = columns + table.columns[j].name+ ' ' +table.columns[j].type.toUpperCase() + ',';
-        }
-      }
-      db.transaction(sql => {
-        sql.executeSql(
-          "CREATE TABLE IF NOT EXISTS " + table.name +'('+ columns +')'
-        );
-      });
+    let checkStatus = ()=>{
+      let DBstatus;
+      return new Promise(function(resolve, reject) {
+        Expo.FileSystem.readAsStringAsync(Expo.FileSystem.documentDirectory + '/DBstatus.json')
+                      .then((data)=>{
+                        DBstatus = data;
+                        resolve(DBstatus);
+                      }).catch((err)=>{
+                        DBstatus = "notInited";
+                        resolve(DBstatus);
+                      });
+      })
     }
+    checkStatus().then((DBstatus)=>{
+      //init database
+      if(DBstatus=='notInited'){
+        let initedTables = 'initedTables: ';
+        const db = SQLite.openDatabase('db.db');
+        for(let i=0;i<models.tables.length;i++){
+          initedTables = initedTables+models.tables[i].name+",";
+          let table = models.tables[i];
+          let columns = '';
+          for(let j=0;j<table.columns.length;j++){
+            if(j===table.columns.length-1){
+              columns = columns + table.columns[j].name+ ' ' +table.columns[j].type.toUpperCase();
+            }else{
+              columns = columns + table.columns[j].name+ ' ' +table.columns[j].type.toUpperCase() + ',';
+            }
+          }
+          db.transaction(sql => {
+            sql.executeSql(
+              "CREATE TABLE IF NOT EXISTS " + table.name +'('+ columns +')'
+            );
+          });
+        }
+        Expo.FileSystem.writeAsStringAsync(Expo.FileSystem.documentDirectory + '/DBstatus.json',initedTables)
+      }
+    })
+    
   }
 
 
