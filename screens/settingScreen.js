@@ -23,12 +23,10 @@ class setting extends React.Component {
     }
 
     componentWillMount(){
-        console.log('setting')
         db.transaction(sql => {
             sql.executeSql('SELECT * FROM setting', [], (_, { rows }) =>{
                 let data =  rows.item(0);
                 if(data){
-                    console.log(rows.item(0));
                     this.setState({
                         name: data.name,
                         DowName: data.DowName,
@@ -84,8 +82,6 @@ class setting extends React.Component {
     }
 
     _saveSetting = () => {
-        console.log('savesetting')
-        console.log(this.state)
         db.transaction(sql => {
             console.log(sql)
             sql.executeSql('INSERT OR REPLACE INTO setting (id,name,DowName,belongedTemple,email) values ('+
