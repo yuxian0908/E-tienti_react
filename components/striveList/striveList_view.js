@@ -34,7 +34,7 @@ export class StriveList extends React.Component {
             <View>
                 {renderList.map((elem,index) => {
                     return (
-                        <CheckBox key={index+1} title={elem.title} checked={elem.isChecked}
+                        <CheckBox key={index+1} title={(index+1)+". "+elem.title} checked={elem.isChecked}
                         onPress={()=>{
                             elem.isChecked = !elem.isChecked;
                             this.props.selectStriveElem(renderList);

@@ -11,11 +11,11 @@ export const CHENESE = {
         striveRecord:{
             refresh:            "更新",
             saveImg:            "儲存相片",
-            exportImg:          "匯出圖片",
-            sendEmail:          "寄出",
+            exportImg:          "圖片",
+            sendEmail:          "寄送",
             confirm:            "確定",
             cancel:             "取消",
-            enterMonth:         "點此選擇月份 -> ",
+            enterMonth:         "點此選擇月份",
             name:               "姓名:",
             DowName:            "道名:",
             belongedTemple:     "教院:",
@@ -25,14 +25,14 @@ export const CHENESE = {
                 belongedTemple:     "請輸入教院"
             },
             recordTitle:{
-                first:          "天地教同奮",
+                first:          "天帝教同奮",
                 second:         "奮鬥卡"
             },
         },
         striveCard:{
             button:{
                 all:            "全選",
-                cancel:         "取消選取",
+                cancel:         "取消",
                 save:           "儲存"
             },
             list:{

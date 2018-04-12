@@ -138,15 +138,12 @@ class MonthSelection extends React.Component {
             alignItems:'center',
             padding:10
           }}>
-            <Text>{I18n.t('striveRecord.enterMonth')}</Text>
             <TouchableOpacity
-              style={{flex:0.1}}
+              style={{flex:0.5}}
               onPress={() => {
                 this.setModalVisible(true);
               }}>
-              <Icon 
-              name = 'calendar' type = 'entypo' color = 'black' 
-              style = {BUTTON_GROUP_STYLES.backIconStyle}/>
+              <Text>{I18n.t('striveRecord.enterMonth')}</Text>
             </TouchableOpacity>
           </View>
         </View>

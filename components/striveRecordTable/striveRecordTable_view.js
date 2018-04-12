@@ -69,21 +69,13 @@ class StriveRecordTable extends React.Component {
             <View>
                 <View>
                     <Button 
+                        buttonStyle={styles.emailBtn}
+                        title={I18n.t('striveRecord.sendEmail')} 
+                        onPress={this._viewToImg}/>
+                    <Button 
                         buttonStyle={styles.exportBtn}
                         title={I18n.t('striveRecord.exportImg')} 
-                        onPress={this._viewToImg} />
-                    <TouchableOpacity
-                        style={styles.refreshBtn}
-                        onPress={() => {
-                            monthRecordView.setDate(this.props,selectedMonth);
-                        }}>
-                        <Text>{I18n.t('striveRecord.refresh')}</Text>
-                        <View>
-                            <Icon 
-                                name = 'refresh' type = 'EvilIcons' color = 'black' 
-                                style = {BUTTON_GROUP_STYLES.backIconStyle}/>
-                        </View>
-                    </TouchableOpacity>
+                        onPress={this._viewToImgAndModal} />
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -126,7 +118,7 @@ class StriveRecordTable extends React.Component {
                     <View style={styles.seletedMon}>
                         <View style={styles.titleInfo}>
                             <View>
-                                <Text style={{fontSize:25}}>
+                                <Text style={{fontSize:24*SCREEN_HEIGHT/640}}>
                                     {I18n.t('striveRecord.recordTitle.first')+renderTitleMonth+
                                     I18n.t('striveRecord.recordTitle.second')}
                                 </Text>
@@ -136,26 +128,26 @@ class StriveRecordTable extends React.Component {
                             <View style={{flex:0.33, flexDirection:'row'}}>
                                 <Text style={{flex:0.3,padding:0}}>{I18n.t('striveRecord.name')}</Text>
                                 <TextInput
-                                style={styles.userInfo.input}
-                                placeholder={I18n.t('striveRecord.placeholder.name')}
-                                value={this.state.name}
-                                />
+                                    style={styles.userInfo.input}
+                                    value={this.state.name}
+                                    editable={false}
+                                    />
                             </View>
                             <View style={{flex:0.33, flexDirection:'row'}}>
                                 <Text style={{flex:0.3,padding:0}}>{I18n.t('striveRecord.DowName')}</Text>
                                 <TextInput
-                                style={styles.userInfo.input}
-                                placeholder={I18n.t('striveRecord.placeholder.DowName')}
-                                value={this.state.DowName}
-                                />
+                                    style={styles.userInfo.input}
+                                    value={this.state.DowName}
+                                    editable={false}
+                                    />
                             </View>
                             <View style={{flex:0.33, flexDirection:'row'}}>
                                 <Text style={{flex:0.3,padding:0}}>{I18n.t('striveRecord.belongedTemple')}</Text>
                                 <TextInput
-                                style={styles.userInfo.input}
-                                placeholder={I18n.t('striveRecord.placeholder.belongedTemple')}
-                                value={this.state.belongedTemple}
-                                />
+                                    style={styles.userInfo.input}
+                                    value={this.state.belongedTemple}
+                                    editable={false}
+                                    />
                             </View>
                         </View>
                         {monthRecordView.fullweeks(monthRecordView.fullweeksnum).fill(1).map((nouse1, week) => {
@@ -168,7 +160,10 @@ class StriveRecordTable extends React.Component {
                                         <Text key={'titleText' + (((week) * 7) + (weekday + 1))}>{((week) * 7) + (weekday + 1)}</Text>
                                     </View>
                                     <View key={'content' + (((week) * 7) + (weekday + 1))}>
-                                        <Text key={'contentText' + (((week) * 7) + (weekday + 1))}>{renderEvent[(((week) * 7) + (weekday + 1))]}</Text>
+                                        <Text key={'contentText' + (((week) * 7) + (weekday + 1))} 
+                                                                    style={styles.weekdayViewContent}>
+                                            {renderEvent[(((week) * 7) + (weekday + 1))]}
+                                        </Text>
                                     </View>
                                 </View>
                                 );
@@ -187,7 +182,10 @@ class StriveRecordTable extends React.Component {
                                         <Text key={'titleText' + (remaindWeekdays+29)}>{remaindWeekdays+29}</Text>
                                     </View>
                                     <View key={'content' + (remaindWeekdays+29)}>
-                                        <Text key={'contentText' + (remaindWeekdays+29)}>{renderEvent[remaindWeekdays+29]}</Text>
+                                        <Text key={'contentText' + (remaindWeekdays+29)}
+                                                    style={styles.weekdayViewContent}>
+                                            {renderEvent[remaindWeekdays+29]}
+                                        </Text>
                                     </View>
                                 </View>
                                 );
@@ -225,7 +223,7 @@ class StriveRecordTable extends React.Component {
           throw new Error('camera permission not granted');
         }
     };
-    _viewToImg = async () => {
+    _viewToImgAndModal = async () => {
         const { Permissions } = Expo;
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         if (status === 'granted') {
@@ -236,6 +234,22 @@ class StriveRecordTable extends React.Component {
             });
             
             this.setModalVisible(true,this.savingItem);
+        } else {
+          throw new Error('camera permission not granted');
+        }
+    };
+    _viewToImg = async () => {
+        const { Permissions } = Expo;
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status === 'granted') {
+            console.log('saveResult');
+            this.savingItem = await takeSnapshotAsync(this._container, {
+              format: 'jpeg',
+              result: 'file',
+            });
+            
+            this.setState({exportImg: this.savingItem});
+            StriveRecordTable_Fn.sendEmail(this.state)
         } else {
           throw new Error('camera permission not granted');
         }
@@ -260,14 +274,17 @@ const styles = {
       borderColor: 'black',
       borderWidth:1,
       width: '14.2%',
-      height:105,
+      height: SCREEN_HEIGHT/7,
       backgroundColor: 'yellow'
     },
     weekdayTitle:{
-      height:30,
+      height:SCREEN_HEIGHT/27,
       borderStyle: 'solid',
       borderBottomColor: 'black',
       borderBottomWidth:1,
+    },
+    weekdayViewContent:{
+        fontSize:13*SCREEN_HEIGHT/640
     },
     seletedMon:{
         padding:5,
@@ -299,9 +316,15 @@ const styles = {
         alignItems: 'center'
     },
     exportBtn:{
-        width:SCREEN_WIDTH*0.25,
+        width:SCREEN_WIDTH*0.2,
         position:'absolute',
         right:SCREEN_WIDTH*0.05,
+        top:-50
+    },
+    emailBtn:{
+        width:SCREEN_WIDTH*0.2,
+        position:'absolute',
+        right:SCREEN_WIDTH*0.3,
         top:-50
     },
     refreshBtn:{
