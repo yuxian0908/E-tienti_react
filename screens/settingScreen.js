@@ -40,7 +40,7 @@ class setting extends React.Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container}  ref="_scrollView">
                 <View>
                     <Text style={styles.label}>{I18n.t('setting.name')}</Text>
                     <TextInput 
@@ -61,7 +61,8 @@ class setting extends React.Component {
                     style={styles.inputStyle}
                     underlineColorAndroid = 'rgba(0,0,0,0)'
                     onChangeText={(belongedTemple) => this.setState({belongedTemple})}
-                    value={this.state.belongedTemple}/>
+                    value={this.state.belongedTemple}
+                    onFocus={() => { this.refs._scrollView.scrollTo(75); }}/>
 
                     <Text style={styles.label}>{I18n.t('setting.email')}</Text>
 
@@ -69,13 +70,16 @@ class setting extends React.Component {
                     style={styles.inputStyle}
                     underlineColorAndroid = 'rgba(0,0,0,0)'
                     onChangeText={(email) => this.setState({email})}
-                    value={this.state.email}/>
+                    value={this.state.email}
+                    onFocus={() => { this.refs._scrollView.scrollTo(150); }}/>
 
                     <View style={{padding:10}}>
                         <Button 
                             title={I18n.t('setting.confirm')} 
                             onPress={this._saveSetting} />
                     </View>
+                </View>
+                <View style={{height:350}}>
                 </View>
             </ScrollView>
         );

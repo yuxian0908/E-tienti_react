@@ -15,7 +15,7 @@ import { BUTTON_GROUP_STYLES, SCREEN_WIDTH, SCREEN_HEIGHT } from '../../constant
 const db = SQLite.openDatabase('db.db');
 
 class StriveRecordTable extends React.Component {
-    
+
     state = {
         modalVisible: false,
         exportImg: '',
@@ -91,7 +91,7 @@ class StriveRecordTable extends React.Component {
                             <View style={styles.savingBtn}>
                                 <Button 
                                 buttonStyle={{
-                                    width:SCREEN_WIDTH*0.25,
+                                    width:SCREEN_WIDTH*0.35,
                                 }}
                                 title={I18n.t('striveRecord.saveImg')}
                                 onPress={this._saveToCameraRollAsync}/>                                       
@@ -118,9 +118,8 @@ class StriveRecordTable extends React.Component {
                     <View style={styles.seletedMon}>
                         <View style={styles.titleInfo}>
                             <View>
-                                <Text style={{fontSize:24*SCREEN_HEIGHT/640}}>
-                                    {I18n.t('striveRecord.recordTitle.first')+renderTitleMonth+
-                                    I18n.t('striveRecord.recordTitle.second')}
+                                <Text style={{fontSize:20*SCREEN_HEIGHT/640}}>
+                                    {I18n.t('striveRecord.recordTitle.first')+renderTitleMonth+I18n.t('striveRecord.recordTitle.second')}
                                 </Text>
                             </View>
                         </View>
@@ -154,58 +153,48 @@ class StriveRecordTable extends React.Component {
                         return (
                             <View key={week} style={styles.weekView}>
                             {monthRecordView.weekdays(monthRecordView.weekdaysnum).fill(1).map((nouse2, weekday) => {
-                                return (
-                                <View key={((week) * 7) + (weekday + 1)} style={styles.weekdayView}>
-                                    <View key={'title' + (((week) * 7) + (weekday + 1))} style={styles.weekdayTitle}>
-                                        <Text key={'titleText' + (((week) * 7) + (weekday + 1))}>{((week) * 7) + (weekday + 1)}</Text>
-                                    </View>
-                                    <View key={'content' + (((week) * 7) + (weekday + 1))}>
-                                        <Text key={'contentText' + (((week) * 7) + (weekday + 1))} 
-                                                                    style={styles.weekdayViewContent}>
-                                            {renderEvent[(((week) * 7) + (weekday + 1))]}
-                                        </Text>
-                                    </View>
-                                </View>
-                                );
+
+                                if(week==0&&weekday==0){
+                                    return (
+                                        <View key={0} style={styles.weekdayView}>
+                                            <View key={'title' + "0"} style={styles.weekdayTitle}>
+                                                <Text key={'titleText' + "0"}
+                                                        style={{fontSize:16*SCREEN_HEIGHT/640,
+                                                                textAlign: 'center'}}>
+                                                    日
+                                                </Text>
+                                            </View>
+                                            <View key={'content' + "0"}>
+                                                <Text key={'contentText' + "0"} 
+                                                        style={{fontSize:20*SCREEN_HEIGHT/640,
+                                                                textAlign: 'center'}}>
+                                                    奮{"\n"}鬥{"\n"}紀{"\n"}錄
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    );
+                                }else{
+                                    return (
+                                        <View key={((week) * monthRecordView.weekdaysnum) + (weekday)} style={styles.weekdayView}>
+                                            <View key={'title' + (((week) * monthRecordView.weekdaysnum) + (weekday))} style={styles.weekdayTitle}>
+                                                <Text key={'titleText' + (((week) * monthRecordView.weekdaysnum) + (weekday))}>
+                                                    {(((week) * monthRecordView.weekdaysnum) + (weekday))>31?"":((week) * monthRecordView.weekdaysnum) + (weekday)}
+                                                </Text>
+                                            </View>
+                                            <View key={'content' + (((week) * monthRecordView.weekdaysnum) + (weekday))}>
+                                                <Text key={'contentText' + (((week) * monthRecordView.weekdaysnum) + (weekday))} 
+                                                                            style={styles.weekdayViewContent}>
+                                                    {renderEvent[(((week) * monthRecordView.weekdaysnum) + (weekday))]}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    );
+                                }
+                                
                             })}
                             </View>
                         );
                         })}
-
-                        {monthRecordView.remaindWeek(monthRecordView.remaindWeeknum).fill(1).map((nouse1, week) => {
-                        return (
-                            <View key={week} style={styles.weekView}>
-                            {monthRecordView.remaindWeekdays(monthRecordView.remaindWeekdaysnum).fill(1).map((nouse2, remaindWeekdays) => {
-                                return (
-                                <View key={remaindWeekdays+29} style={styles.weekdayView}>
-                                    <View key={'title' + (remaindWeekdays+29)} style={styles.weekdayTitle}>
-                                        <Text key={'titleText' + (remaindWeekdays+29)}>{remaindWeekdays+29}</Text>
-                                    </View>
-                                    <View key={'content' + (remaindWeekdays+29)}>
-                                        <Text key={'contentText' + (remaindWeekdays+29)}
-                                                    style={styles.weekdayViewContent}>
-                                            {renderEvent[remaindWeekdays+29]}
-                                        </Text>
-                                    </View>
-                                </View>
-                                );
-                            })}
-                            {monthRecordView.remaindDays(monthRecordView.remaindDaysnum).fill(1).map((nouse2, remaindDays) => {
-                                return (
-                                <View key={'remaindDays'+remaindDays} style={styles.weekdayView}>
-                                    <View key={'title-' + ('remaindDays'+remaindDays)} style={styles.weekdayTitle}>
-                                        <Text key={'titleText-' + ('remaindDays'+remaindDays)}></Text>
-                                    </View>
-                                    <View key={'content-' + ('remaindDays'+remaindDays)}>
-                                        <Text key={'contentText=' + ('remaindDays'+remaindDays)}></Text>
-                                    </View>
-                                </View>
-                                );
-                            })}
-                            </View>
-                        );
-                        })}
-
                     </View>
                 </View>
             </View>
@@ -273,8 +262,8 @@ const styles = {
       borderStyle: 'solid',
       borderColor: 'black',
       borderWidth:1,
-      width: '14.2%',
-      height: SCREEN_HEIGHT/7,
+      width: '9.05%',
+      height: SCREEN_HEIGHT/3.6,
       backgroundColor: 'yellow'
     },
     weekdayTitle:{
@@ -284,7 +273,9 @@ const styles = {
       borderBottomWidth:1,
     },
     weekdayViewContent:{
-        fontSize:13*SCREEN_HEIGHT/640
+        fontSize:10.3*SCREEN_HEIGHT/640,
+        textAlign: 'center',
+        fontWeight: 'bold'
     },
     seletedMon:{
         padding:5,
@@ -304,7 +295,8 @@ const styles = {
             height: 35,
             width:100, 
             flex:0.65,
-            padding:5
+            padding:5,
+            fontSize: 12*SCREEN_HEIGHT/640
         }
     },
     titleInfo:{

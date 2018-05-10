@@ -14,7 +14,7 @@ export const StriveRecordTable_Fn = {
             this.selectedMonth = (day.getFullYear()+'-'+("0" + (day.getMonth() + 1)).slice(-2)+
                                           '-'+("0" + day.getDate()).slice(-2)).substring(0, 7);
             this.selectedMonthDate = new Date(Number(day.getFullYear()),Number(day.getMonth()+1),0);
-            this.fullweeksnum = Math.floor(this.selectedMonthDate.getDate()/7);
+            this.fullweeksnum = Math.floor(this.selectedMonthDate.getDate()/this.weekdaysnum)+1;
             this.remaindWeeknum = this.selectedMonthDate.getDate()>28?1:0;
             this.remaindWeekdaysnum = this.selectedMonthDate.getDate()%7;
             this.remaindDaysnum = 7-this.selectedMonthDate.getDate()%7;
@@ -38,7 +38,7 @@ export const StriveRecordTable_Fn = {
                       contentCodeArray.push(j+1);
                     }
                   }
-                  event[date] = contentCodeArray.join(' ');
+                  event[date] = contentCodeArray.join('\n');
                 }
                 this.dateEvent = event;
                 props.getStriveRecord(this.dateEvent);
@@ -57,16 +57,16 @@ export const StriveRecordTable_Fn = {
         // fullweeksnum : [1,2,3,4],
         // weekdaysnum :[1,2,3,4,5,6,7],
         fullweeks : Array,
-        fullweeksnum : 4,
+        fullweeksnum : 3,
         weekdays : Array,
-        weekdaysnum : 7,
+        weekdaysnum : 11,
         remaindWeek : Array,
         remaindWeeknum : 0,
         remaindWeekdays : Array,
         remaindWeekdaysnum : 0,
         remaindDays : Array,
         remaindDaysnum : 0,
-        dateEvent:Array(28)
+        dateEvent:Array(31)
     },
     sendEmail:(state)=>{
       let sent = MailComposer.composeAsync({

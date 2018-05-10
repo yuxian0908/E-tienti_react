@@ -26,7 +26,7 @@ export const CHENESE = {
             },
             recordTitle:{
                 first:          "天帝教同奮",
-                second:         "奮鬥卡"
+                second:         "份奮鬥卡"
             },
         },
         striveCard:{
