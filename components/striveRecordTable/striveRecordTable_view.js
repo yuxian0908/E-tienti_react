@@ -59,6 +59,7 @@ class StriveRecordTable extends React.Component {
     }
 
     render() {
+        console.log("SCREEN_WIDTH:  "+SCREEN_WIDTH)
         const monthRecordView = StriveRecordTable_Fn.monthRecordView;
         const { striveRecord:{ InitDateEvent,RecordDateEvent,selectedMonth },
                     selectedDate:{ selectedDay }, selectMonth } = this.props;
@@ -118,7 +119,7 @@ class StriveRecordTable extends React.Component {
                     <View style={styles.seletedMon}>
                         <View style={styles.titleInfo}>
                             <View>
-                                <Text style={{fontSize:20*SCREEN_HEIGHT/640}}>
+                                <Text style={SCREEN_WIDTH>300?{fontSize:20*SCREEN_WIDTH/360}:{fontSize:16*SCREEN_WIDTH/360}}>
                                     {I18n.t('striveRecord.recordTitle.first')+renderTitleMonth+I18n.t('striveRecord.recordTitle.second')}
                                 </Text>
                             </View>
