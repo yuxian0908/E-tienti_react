@@ -1,6 +1,6 @@
 import React from 'react';
 import { View,Modal, TextInput, TouchableOpacity, 
-        CameraRoll, Alert, ToastAndroid, Image  } from 'react-native';
+        CameraRoll, Alert, ToastAndroid, Image, StyleSheet, PixelRatio  } from 'react-native';
 import { Text, Button, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { takeSnapshotAsync } from 'expo';
@@ -13,6 +13,28 @@ import { i18nCONFIG } from '../../constants/i18n';
 import { BUTTON_GROUP_STYLES, SCREEN_WIDTH, SCREEN_HEIGHT } from '../../constants/Layout';
 
 const db = SQLite.openDatabase('db.db');
+const UNDER_HEIGHT = 500;
+const STANDARD_HEIGHT = 640;
+const STANDARD_WIDTH = 360;
+
+let culFontSize = (size)=>{
+    let modSize = size*PixelRatio.get()/3;
+    if(SCREEN_HEIGHT<UNDER_HEIGHT)
+        return modSize/(1.4*PixelRatio.getFontScale());
+    else if(SCREEN_HEIGHT<STANDARD_HEIGHT||SCREEN_WIDTH<STANDARD_WIDTH)
+        return modSize/(1.2*PixelRatio.getFontScale());
+    else
+        return modSize/PixelRatio.getFontScale();
+}
+
+let culHeight = ()=>{
+    if(SCREEN_HEIGHT<UNDER_HEIGHT)
+        return SCREEN_HEIGHT/5;
+    else if(SCREEN_HEIGHT<STANDARD_HEIGHT)
+        return SCREEN_HEIGHT/4.5;
+    else
+        return SCREEN_HEIGHT/3.8;
+}
 
 class StriveRecordTable extends React.Component {
 
@@ -59,7 +81,6 @@ class StriveRecordTable extends React.Component {
     }
 
     render() {
-        console.log("SCREEN_WIDTH:  "+SCREEN_WIDTH)
         const monthRecordView = StriveRecordTable_Fn.monthRecordView;
         const { striveRecord:{ InitDateEvent,RecordDateEvent,selectedMonth },
                     selectedDate:{ selectedDay }, selectMonth } = this.props;
@@ -119,14 +140,14 @@ class StriveRecordTable extends React.Component {
                     <View style={styles.seletedMon}>
                         <View style={styles.titleInfo}>
                             <View>
-                                <Text style={SCREEN_WIDTH>300?{fontSize:20*SCREEN_WIDTH/360}:{fontSize:16*SCREEN_WIDTH/360}}>
+                                <Text style={{fontSize:culFontSize(16)}}>
                                     {I18n.t('striveRecord.recordTitle.first')+renderTitleMonth+I18n.t('striveRecord.recordTitle.second')}
                                 </Text>
                             </View>
                         </View>
                         <View style={styles.userInfo.container}>
                             <View style={{flex:0.33, flexDirection:'row'}}>
-                                <Text style={{flex:0.3,padding:0}}>{I18n.t('striveRecord.name')}</Text>
+                                <Text style={{flex:0.3,padding:0,fontSize:culFontSize(16)}}>{I18n.t('striveRecord.name')}</Text>
                                 <TextInput
                                     style={styles.userInfo.input}
                                     value={this.state.name}
@@ -134,7 +155,7 @@ class StriveRecordTable extends React.Component {
                                     />
                             </View>
                             <View style={{flex:0.33, flexDirection:'row'}}>
-                                <Text style={{flex:0.3,padding:0}}>{I18n.t('striveRecord.DowName')}</Text>
+                                <Text style={{flex:0.3,padding:0,fontSize:culFontSize(16)}}>{I18n.t('striveRecord.DowName')}</Text>
                                 <TextInput
                                     style={styles.userInfo.input}
                                     value={this.state.DowName}
@@ -142,7 +163,7 @@ class StriveRecordTable extends React.Component {
                                     />
                             </View>
                             <View style={{flex:0.33, flexDirection:'row'}}>
-                                <Text style={{flex:0.3,padding:0}}>{I18n.t('striveRecord.belongedTemple')}</Text>
+                                <Text style={{flex:0.3,padding:0,fontSize:culFontSize(16)}}>{I18n.t('striveRecord.belongedTemple')}</Text>
                                 <TextInput
                                     style={styles.userInfo.input}
                                     value={this.state.belongedTemple}
@@ -160,14 +181,14 @@ class StriveRecordTable extends React.Component {
                                         <View key={0} style={styles.weekdayView}>
                                             <View key={'title' + "0"} style={styles.weekdayTitle}>
                                                 <Text key={'titleText' + "0"}
-                                                        style={{fontSize:16*SCREEN_HEIGHT/640,
+                                                        style={{fontSize:culFontSize(11),
                                                                 textAlign: 'center'}}>
                                                     日
                                                 </Text>
                                             </View>
                                             <View key={'content' + "0"}>
                                                 <Text key={'contentText' + "0"} 
-                                                        style={{fontSize:20*SCREEN_HEIGHT/640,
+                                                        style={{fontSize:culFontSize(18),
                                                                 textAlign: 'center'}}>
                                                     奮{"\n"}鬥{"\n"}紀{"\n"}錄
                                                 </Text>
@@ -178,7 +199,7 @@ class StriveRecordTable extends React.Component {
                                     return (
                                         <View key={((week) * monthRecordView.weekdaysnum) + (weekday)} style={styles.weekdayView}>
                                             <View key={'title' + (((week) * monthRecordView.weekdaysnum) + (weekday))} style={styles.weekdayTitle}>
-                                                <Text key={'titleText' + (((week) * monthRecordView.weekdaysnum) + (weekday))}>
+                                                <Text key={'titleText' + (((week) * monthRecordView.weekdaysnum) + (weekday))} style={{fontSize:culFontSize(11)}}>
                                                     {(((week) * monthRecordView.weekdaysnum) + (weekday))>31?"":((week) * monthRecordView.weekdaysnum) + (weekday)}
                                                 </Text>
                                             </View>
@@ -264,17 +285,17 @@ const styles = {
       borderColor: 'black',
       borderWidth:1,
       width: '9.05%',
-      height: SCREEN_HEIGHT/3.6,
+      height: culHeight(),
       backgroundColor: 'yellow'
     },
     weekdayTitle:{
-      height:SCREEN_HEIGHT/27,
+      height:SCREEN_HEIGHT/32,
       borderStyle: 'solid',
       borderBottomColor: 'black',
       borderBottomWidth:1,
     },
     weekdayViewContent:{
-        fontSize:10.3*SCREEN_HEIGHT/640,
+        fontSize:culFontSize(9),
         textAlign: 'center',
         fontWeight: 'bold'
     },
@@ -297,7 +318,7 @@ const styles = {
             width:100, 
             flex:0.65,
             padding:5,
-            fontSize: 12*SCREEN_HEIGHT/640
+            fontSize:culFontSize(12)
         }
     },
     titleInfo:{

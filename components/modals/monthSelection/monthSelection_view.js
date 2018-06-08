@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Modal, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, Modal, Text, TouchableOpacity, ScrollView, TextInput, PixelRatio } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -10,6 +10,12 @@ import { i18nCONFIG } from '../../../constants/i18n';
 import { BUTTON_GROUP_STYLES } from '../../../constants/Layout';
 
 i18nCONFIG();
+
+let culFontSize = (size)=>{
+  let modSize = size*PixelRatio.get()/3;
+  return modSize/PixelRatio.getFontScale();
+}
+
 
 class MonthSelection extends React.Component {
   state = {
@@ -249,7 +255,7 @@ const styles = {
     alignItems: 'center',
   },
   seletFont:{
-    fontSize: 20,
+    fontSize: culFontSize(20),
     fontWeight: 'bold',
     color: '#7AC5CD'
   },
@@ -258,6 +264,6 @@ const styles = {
     paddingBottom: 4 
   },
   touchFont:{
-    fontSize: 30
+    fontSize: culFontSize(30)
   }
 };
